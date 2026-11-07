@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080a09">
+<title>Spotify Airr — Listen Together</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg:#080a09;
+  --panel:#111512;
+  --panel2:#171d19;
+  --green:#b8ff5b;
+  --muted:#858e87;
+  --border:#242c26;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%,#19301d 0%,transparent 45%),
+    var(--bg);
+  color:#fff;
+  font-family:'DM Sans',sans-serif;
+  min-height:100vh;
+}
+
+button,input{font:inherit}
+button{cursor:pointer;transition:.2s}
+button:hover{transform:translateY(-2px);filter:brightness(1.1)}
+
+header {
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 7%;
+  border-bottom:1px solid #ffffff0d;
+  backdrop-filter:blur(20px);
+  position:sticky;
+  top:0;
+  background:#090d0bea;
+  z-index:3;
+}
+
+.logo {
+  font-size:23px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+.logo b{color:var(--green)}
+
+.logo-icon {
+  color:var(--green);
+  margin-right:7px;
+}
+
+.profile-btn {
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:white;
+  padding:10px 15px;
+  border-radius:30px;
+}
+
+main {
+  max-width:1050px;
+  margin:auto;
+  padding:35px 22px 80px;
+}
+
+.hero {
+  text-align:center;
+  padding:75px 10px 65px;
+}
+
+.eyebrow {
+  color:var(--green);
+  font-size:11px;
+  letter-spacing:4px;
+  font-weight:700;
+}
+
+h1 {
+  font-size:clamp(43px,8vw,76px);
+  line-height:1.06;
+  letter-spacing:-4px;
+  margin:24px 0;
+}
+
+h1 span {
+  background:linear-gradient(90deg,#b8ff5b,#e3ffb4);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.subtitle {
+  color:var(--muted);
+  max-width:480px;
+  margin:auto;
+  line-height:1.8;
+  font-size:15px;
+}
+
+.actions {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:13px;
+  margin-top:32px;
+}
+
+.btn {
+  padding:15px 23px;
+  border-radius:13px;
+  font-weight:700;
+  border:1px solid transparent;
+}
+
+.green {
+  background:var(--green);
+  color:#10170d;
+  box-shadow:0 5px 30px #b8ff5b22;
+}
+
+.dark {
+  background:#171d19;
+  border-color:#303a32;
+  color:white;
+}
+
+.section-title {
+  font-size:19px;
+  margin-bottom:18px;
+}
+
+.features {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:15px;
+}
+
+.feature {
+  background:linear-gradient(145deg,#171d19,#101411);
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:24px;
+  transition:.25s;
+}
+
+.feature:hover {
+  border-color:#8dcf4c66;
+  transform:translateY(-4px);
+}
+
+.feature-icon {
+  font-size:26px;
+  color:var(--green);
+}
+
+.feature h3{margin:16px 0 8px;font-size:16px}
+.feature p{color:var(--muted);font-size:13px;line-height:1.7}
+
+.room {
+  display:none;
+  margin-top:35px;
+  background:linear-gradient(140deg,#19251a,#111612);
+  border:1px solid #344b32;
+  border-radius:22px;
+  padding:25px;
+}
+
+.room-code {
+  font-size:30px;
+  letter-spacing:6px;
+  color:var(--green);
+  margin:12px 0 20px;
+  font-weight:800;
+}
+
+.room p{color:var(--muted);font-size:13px}
+
+.modal {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000c;
+  backdrop-filter:blur(9px);
+  z-index:10;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal-box {
+  width:100%;
+  max-width:400px;
+  background:#141a15;
+  border:1px solid #303a32;
+  border-radius:22px;
+  padding:26px;
+  box-shadow:0 20px 80px #0009;
+}
+
+.modal-box h2{margin-bottom:10px}
+.modal-box p{color:var(--muted);font-size:13px;margin-bottom:12px}
+
+.close {
+  float:right;
+  border:0;
+  color:#aaa;
+  background:#252c26;
+  padding:7px 11px;
+  border-radius:8px;
+}
+
+input {
+  width:100%;
+  padding:14px;
+  margin:9px 0;
+  border-radius:11px;
+  background:#090d0a;
+  border:1px solid #303a32;
+  color:white;
+  outline:none;
+}
+
+input:focus{border-color:var(--green)}
+
+.modal-box .btn{width:100%;margin-top:12px}
+
+.status {
+  color:var(--green)!important;
+  margin-top:15px;
+}
+
+footer {
+  text-align:center;
+  padding:35px 15px;
+  color:#59625b;
+  font-size:12px;
+  border-top:1px solid #ffffff0c;
+}
+
+@media(max-width:600px) {
+  header{padding:0 20px}
+  main{padding:20px 17px 60px}
+  .hero{padding:65px 5px 55px}
+  h1{letter-spacing:-2.5px}
+  .btn{width:100%}
+  .room{padding:20px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-icon">♫</span> Spotify <b>Airr.</b>
+  </div>
+  <button class="profile-btn" onclick="openModal('settings')">
+    ◉ Profile
+  </button>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="eyebrow">✦ YOUR MUSIC. YOUR PEOPLE. ✦</div>
+
+  <h1>Music feels better<br><span>together.</span></h1>
+
+  <p class="subtitle">
+    Create your own listening room, invite your friends
+    and share the same music wherever you are.
+  </p>
+
+  <div class="actions">
+    <button class="btn green" onclick="createRoom()">
+      ＋ Create a room
+    </button>
+
+    <button class="btn dark" onclick="openModal('join')">
+      Join a room ↗
+    </button>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Your listening experience</h2>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">♫</div>
+      <h3>Listen together</h3>
+      <p>Share a listening session with your favourite people.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">◈</div>
+      <h3>Private rooms</h3>
+      <p>Create private spaces and invite friends with a link.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">✧</div>
+      <h3>Live conversations</h3>
+      <p>Chat, react and enjoy music with your friends.</p>
+    </div>
+  </div>
+</section>
+
+<section class="room" id="room">
+  <p>YOUR LISTENING ROOM</p>
+  <h2 style="margin-top:12px">You're in your room ✦</h2>
+  <p style="margin-top:12px">ROOM CODE</p>
+  <div class="room-code" id="roomcode"></div>
+
+  <button class="btn green" onclick="copyLink()">
+    Copy invitation link
+  </button>
+
+  <button class="btn dark" onclick="leaveRoom()" style="margin-top:10px">
+    Leave room
+  </button>
+
+  <p class="status" id="roomstatus">Room created.</p>
+</section>
+
+</main>
+
+<div class="modal" id="join">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal('join')">✕</button>
+    <h2>Join a room</h2>
+    <p>Enter your friend's invitation code.</p>
+
+    <input id="joincode" placeholder="Enter room code">
+
+    <button class="btn green" onclick="joinRoom()">Join room →</button>
+  </div>
+</div>
+
+<div class="modal" id="settings">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal('settings')">✕</button>
+    <h2>Your profile</h2>
+    <p>Customize your listening identity.</p>
+
+    <input id="username" placeholder="Your username">
+    <input id="avatar" placeholder="Profile picture URL">
+
+    <button class="btn green" onclick="saveProfile()">Save changes</button>
+    <p class="status" id="saved"></p>
+  </div>
+</div>
+
+<footer>
+  Spotify Airr · Made for music lovers
+</footer>
+
+<script>
+let currentRoom = "";
+
+function openModal(id) {
+  document.getElementById(id).style.display = "flex";
+}
+
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+function createRoom() {
+  currentRoom = Math.random().toString(36)
+    .substring(2,8).toUpperCase();
+  showRoom();
+}
+
+function showRoom() {
+  document.getElementById("room").style.display = "block";
+  document.getElementById("roomcode").textContent = currentRoom;
+  document.getElementById("roomstatus").textContent =
+    "Room created! Share your invitation link.";
+  document.getElementById("room").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+function joinRoom() {
+  const code = document.getElementById("joincode")
+    .value.trim().toUpperCase();
+
+  if (!code) {
+    alert("Please enter a room code.");
+    return;
+  }
+
+  currentRoom = code;
+  closeModal("join");
+  showRoom();
+}
+
+function copyLink() {
+  const link = location.href.split("?")[0] +
+    "?room=" + currentRoom;
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(link)
+      .then(() => alert("Invitation link copied!"))
+      .catch(() => alert(link));
+  } else {
+    alert(link);
+  }
+}
+
+function leaveRoom() {
+  currentRoom = "";
+  document.getElementById("room").style.display = "none";
+}
+
+function saveProfile() {
+  localStorage.setItem("airrName",
+    document.getElementById("username").value);
+
+  localStorage.setItem("airrAvatar",
+    document.getElementById("avatar").value);
+
+  document.getElementById("saved").textContent =
+    "✓ Profile saved on this device!";
+}
+
+document.getElementById("username").value =
+  localStorage.getItem("airrName") || "";
+
+document.getElementById("avatar").value =
+  localStorage.getItem("airrAvatar") || "";
+
+const params = new URLSearchParams(location.search);
+const invitedRoom = params.get("room");
+
+if (invitedRoom) {
+  currentRoom = invitedRoom.toUpperCase();
+  showRoom();
+}
+</script>
+
+</body>
+</html>
